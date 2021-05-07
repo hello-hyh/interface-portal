@@ -1,5 +1,7 @@
-import { definitions } from "../interface";
-
+// import { definitions } from "../interface";
+// const a: definitions["CategoryModel"] = {
+//   id: 4,
+// };
 interface Point {
   _type: "point";
   x: number;

@@ -1,23 +1,27 @@
 const axios = require("axios");
 const path = require('path')
-const { readFileSync, writeFileSync, mkdirSync } = require("fs");
+const { readFileSync, writeFileSync, mkdirSync, accessSync, constants } = require("fs");
 const { default: swaggerToTS } = require("openapi-typescript");
-const outputDir = path.resolve(__dirname,'../swagger_interface')
-const outputSwJson = path.resolve(__dirname,`../swagger_interface/swagger.json`)
-const outputInterface = path.resolve(__dirname,`../swagger_interface/interface.ts`)
+const outputDir = path.resolve('./swagger_interface')
+const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
+const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
 class InterfacePortalPlugin {
-  constructor (params) {
-    this.apiPath = params['apiPath'] || 'https://dmpkservice-test.wuxiapptec.com/DMPK.ServicePortal.WebApi/swagger/v1/swagger.json?_1619505812331' 
+  constructor (params = { apiPath: '' }) {
+    this.apiPath = params['apiPath'] || ''
   }
   apply(compiler) {
-
-    compiler.hooks.done.tapPromise("InterfacePortalPlugin", (compilation) => {
+    // todo: how to do cache
+    compiler.hooks.watchRun.tapPromise("InterfacePortalPlugin", (compilation) => {
       return new Promise((resovle, reject) => {
         try {
           axios
             .get(this.apiPath)
             .then(({ data: res }) => {
-              mkdirSync(outputDir, { recursive: true })
+              try {
+                accessSync(outputDir, constants.R_OK | constants.W_OK)
+              } catch (error) {
+                mkdirSync(outputDir, { recursive: true })
+              }
               writeFileSync(outputSwJson, JSON.stringify(res));
               const input = JSON.parse(readFileSync(outputSwJson, "utf8"));
               const output = swaggerToTS(input);

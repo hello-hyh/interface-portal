@@ -1,12 +1,16 @@
 {
-  "name": "interface-portal",
-  "version": "1.0.0",
+  "name": "interface-portal-plugin",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "build:dev": "webpack --watch --config ./config/webpack.plugin.config.js",
-    "build:test": "webpack  --config ./config/webpack.test.config.js"
+    "build:test": "webpack --watch  --config ./config/webpack.test.config.js",
+    "postinstall": "node src/postInstall.js"
   },
+  "files": [
+    "src/",
+    "README.md"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
