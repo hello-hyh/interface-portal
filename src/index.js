@@ -2,9 +2,9 @@ const axios = require("axios");
 const path = require('path')
 const { readFileSync, writeFileSync, mkdirSync, accessSync, constants } = require("fs");
 const { default: swaggerToTS } = require("openapi-typescript");
-const outputDir = path.resolve('./swagger_interface')
-const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
-const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
+const outputDir = path.resolve('../../swagger_interface')
+const outputSwJson = path.resolve(`../../swagger_interface/swagger.json`)
+const outputInterface = path.resolve(`../../swagger_interface/interface.ts`)
 class InterfacePortalPlugin {
   constructor (params = { apiPath: '' }) {
     this.apiPath = params['apiPath'] || ''
