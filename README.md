@@ -21,7 +21,7 @@ plugins: [
   ],
 ```
 
-when your build project whit watch mode,
+when your build project with watch mode,
 the `swagger_interface` dir well be create,
 end use `import` interface to your .ts file.
 
