@@ -17,7 +17,7 @@ const InterfacePortalPlugin = require("interface-portal-plugin");
 
 plugins: [
   ... // other plugin
-  new InterfacePortal({ apitPath: 'your openapi json path' })
+  new InterfacePortalPlugin({ apitPath: 'your openapi json path' })
   ],
 ```
 
