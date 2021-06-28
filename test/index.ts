@@ -17,5 +17,5 @@ function PointDistance(p: Point) {
 }
 let p1: Point;
 let p2: RadiusPoint;
-
+function b() {}
 function aa(b, c) {}

@@ -5,18 +5,31 @@ const { default: swaggerToTS } = require("openapi-typescript");
 const outputDir = path.resolve('./swagger_interface')
 const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
 const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
+const os = require('os');
+const cacheDir = `${os.homedir()}/.InterfacePortal`
+const md5 = require("md5");
+
 class InterfacePortalPlugin {
-  constructor (params = { apiPath: '' }) {
+  constructor(params = { apiPath: '' }) {
     this.apiPath = params['apiPath'] || ''
+    this.catchFile = `${cacheDir}/${md5(this.apiPath)}.txt`
   }
-  apply(compiler) {
-    // todo: how to do cache
+  apply (compiler) {
+    // maybe using json file to catch hash
     compiler.hooks.watchRun.tapPromise("InterfacePortalPlugin", (compilation) => {
       return new Promise((resovle, reject) => {
         try {
-          axios
-            .get(this.apiPath)
-            .then(({ data: res }) => {
+          accessSync(this.catchFile, constants.R_OK | constants.W_OK)
+        } catch (error) {
+          writeFileSync(this.catchFile, "")
+        }
+        const lastHash = readFileSync(this.catchFile, 'utf-8')
+        axios
+          .get(this.apiPath)
+          .then(({ data: res }) => {
+            const currentHash = md5(res)
+            if (lastHash !== currentHash) {
+              writeFileSync(this.catchFile, currentHash)
               try {
                 accessSync(outputDir, constants.R_OK | constants.W_OK)
               } catch (error) {
@@ -27,10 +40,12 @@ class InterfacePortalPlugin {
               const output = swaggerToTS(input);
               writeFileSync(outputInterface, output);
               resovle(true);
-            });
-        } catch (error) {
-          reject(error);
-        }
+            } else {
+              resovle(true)
+            }
+          }).catch((e) => {
+            reject(e)
+          })
       });
     });
   }

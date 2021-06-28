@@ -19,6 +19,7 @@ module.exports = {
   module: {
     rules: [{ test: /\.ts$/, use: "ts-loader" }],
   },
-  plugins: [new InterfacePortal({ apitPath: '1231' })],
+  // enter your openapi json path.
+  plugins: [new InterfacePortal({ apiPath: '11' })],
   mode: "production",
 };
