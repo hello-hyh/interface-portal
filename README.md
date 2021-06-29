@@ -6,6 +6,9 @@
 npm install interface-portal-plugin
 ```
 
+# Feat
+add cache feat.
+
 # Usage
 
 in your webpack config file
