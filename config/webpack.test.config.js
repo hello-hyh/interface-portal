@@ -1,9 +1,10 @@
 var path = require("path");
+var webapck = require('webpack')
 // var TerserPlugin = require('terser-webpack-plugin');
 var InterfacePortal = require('../src/index')
 module.exports = {
   entry: {
-   test: "./test/index.ts",
+    test: "./test/index.ts",
   },
   output: {
     filename: "[name].js",
@@ -20,6 +21,6 @@ module.exports = {
     rules: [{ test: /\.ts$/, use: "ts-loader" }],
   },
   // enter your openapi json path.
-  plugins: [new InterfacePortal({ apiPath: '11' })],
+  plugins: [new InterfacePortal({ apiPath: '1' })],
   mode: "production",
 };

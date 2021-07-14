@@ -18,10 +18,16 @@ class InterfacePortalPlugin {
     // maybe using json file to catch hash
     compiler.hooks.watchRun.tapPromise("InterfacePortalPlugin", (compilation) => {
       return new Promise((resovle, reject) => {
+        // check cachefile exists
         try {
-          accessSync(this.catchFile, constants.R_OK | constants.W_OK)
+          mkdirSync(cacheDir);
+          writeFileSync(this.catchFile, "");
         } catch (error) {
-          writeFileSync(this.catchFile, "")
+          try {
+            accessSync(this.catchFile, constants.R_OK | constants.W_OK)
+          } catch (e) {
+            writeFileSync(this.catchFile, "");
+          }
         }
         const lastHash = readFileSync(this.catchFile, 'utf-8')
         axios
