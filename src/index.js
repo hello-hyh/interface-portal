@@ -5,8 +5,7 @@ const { default: swaggerToTS } = require("openapi-typescript");
 const outputDir = path.resolve('./swagger_interface')
 const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
 const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
-const os = require('os');
-const cacheDir = `${os.homedir()}/.InterfacePortal`
+const cacheDir = path.resolve(`./node_modules/.InterfacePortal`)
 const md5 = require("md5");
 
 class InterfacePortalPlugin {
