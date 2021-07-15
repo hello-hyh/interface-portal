@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build:test": "webpack --watch  --config ./config/webpack.test.config.js",
-    "postinstall": "node src/postInstall.js"
+    "postinstall": "node src/postInstall.js",
+    "pub": "npm version patch"
   },
   "files": [
     "src/",
