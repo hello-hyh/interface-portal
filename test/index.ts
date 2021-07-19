@@ -16,7 +16,6 @@ function PointDistance(p: Point) {
   return Math.sqrt(p.x ** 2 + p.y ** 2);
 }
 let p1: Point;
-let p2: RadiusPoint;
-function b() {}
-function aa(b, c) {}
 
+let p2: RadiusPoint;
+function b() {} 

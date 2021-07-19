@@ -3,7 +3,6 @@ const path = require('path')
 const { readFileSync, writeFileSync, mkdirSync, accessSync, constants } = require("fs");
 const { default: swaggerToTS } = require("openapi-typescript");
 const outputDir = path.resolve('./swagger_interface')
-const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
 const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
 const cacheDir = path.resolve(`./node_modules/.InterfacePortal`)
 const md5 = require("md5");
@@ -32,7 +31,8 @@ class InterfacePortalPlugin {
         axios
           .get(this.apiPath)
           .then(({ data: res }) => {
-            const currentHash = md5(res)
+            const resStr = JSON.stringify(res['components'])
+            const currentHash = resStr.length.toString()
             if (lastHash !== currentHash) {
               writeFileSync(this.catchFile, currentHash)
               try {
@@ -40,9 +40,7 @@ class InterfacePortalPlugin {
               } catch (error) {
                 mkdirSync(outputDir, { recursive: true })
               }
-              writeFileSync(outputSwJson, JSON.stringify(res));
-              const input = JSON.parse(readFileSync(outputSwJson, "utf8"));
-              const output = swaggerToTS(input);
+              const output = swaggerToTS(res);
               writeFileSync(outputInterface, output);
               resovle(true);
             } else {

@@ -1,10 +1,10 @@
 {
   "name": "interface-portal-plugin",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "build:test": "webpack --watch  --config ./config/webpack.test.config.js",
+    "dev": "webpack --watch  --config ./config/webpack.test.config.js",
     "postinstall": "node src/postInstall.js",
     "pub": "npm version patch"
   },
